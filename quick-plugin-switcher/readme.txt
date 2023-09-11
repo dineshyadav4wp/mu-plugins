@@ -2,10 +2,10 @@
 Contributors: dineshinau
 Donate link: https://dineshinaublog.wordpress.com/donate-me
 Tags: qps, switcher, switch, change, quick, quick switcher, plugin switcher, quick plugin, change plugin status, plugin status switcher
-Requires at least: 5.0.0
-Tested up to: 6.0
+Requires at least: 5.0
+Tested up to: 6.3
 Stable tag: 1.5.3
-Requires PHP: 7.0
+Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 

@@ -11,9 +11,9 @@
  * Text Domain:       quick-plugin-switcher
  * Domain Path:       /languages
  *
- * Requires at least: 5.0.0
- * Tested up to: 6.0.0
- * Requires PHP: 7.0
+ * Requires at least: 5.0
+ * Tested up to: 6.3
+ * Requires PHP: 7.3
  *
  * @package quick-plugin-switcher
  */
