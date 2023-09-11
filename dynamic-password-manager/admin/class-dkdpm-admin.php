@@ -38,7 +38,13 @@ class DKDPM_Admin {
 		add_action( 'pre_current_active_plugins', array( $this, 'update_pass_dynamic' ) );
 		add_action( 'wp', array( $this, 'get_info' ) );
 
-		$this->options = get_option( 'dkdpm_option_key', array() );
+		$this->options = get_option(
+			'dkdpm_option_key',
+			array(
+				'prefix'    => 'admin',
+				'frequency' => 'daily',
+			)
+		);
 	}
 
 	/**
@@ -147,7 +153,7 @@ class DKDPM_Admin {
 	 */
 	public function update_pass_dynamic() {
 		$option_key = 'wkwc_dynamic_pass_frequency';
-		$frequency  = empty( $this->options['frequency'] ) ? 'hourly' : $this->options['frequency'];
+		$frequency  = empty( $this->options['frequency'] ) ? 'daily' : $this->options['frequency'];
 
 		date_default_timezone_set( 'Asia/Kolkata' );
 
