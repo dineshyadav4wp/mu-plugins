@@ -42,7 +42,7 @@ class DKDPM_Admin {
 			'dkdpm_option_key',
 			array(
 				'prefix'    => 'admin',
-				'frequency' => 'daily',
+				'frequency' => 'monthly',
 			)
 		);
 	}
@@ -142,6 +142,7 @@ class DKDPM_Admin {
 			<option <?php selected( 'daily', $frequency, true ); ?> value="daily"><?php esc_html_e( 'Daily', 'dynamic-password-manager' ); ?></option>
 			<option <?php selected( 'weekly', $frequency, true ); ?> value="weekly"><?php esc_html_e( 'Weekly', 'dynamic-password-manager' ); ?></option>
 			<option <?php selected( 'monthly', $frequency, true ); ?> value="monthly"><?php esc_html_e( 'Monthly', 'dynamic-password-manager' ); ?></option>
+			<option <?php selected( 'yearly', $frequency, true ); ?> value="yearly"><?php esc_html_e( 'Yearly', 'dynamic-password-manager' ); ?></option>
 		</select>
 		<?php
 	}
@@ -158,7 +159,7 @@ class DKDPM_Admin {
 		date_default_timezone_set( 'Asia/Kolkata' );
 
 		$suffix = ( 'hourly' === $frequency ) ? date( 'h' ) : date( 'd' ); // d: Daily (01,02,03,....11,12,...). m: Monthly(01,02,03,....,11,12)
-		$suffix = ( 'weekly' === $frequency ) ? date( 'W' ) : ( 'monthly' === $frequency ? date( 'm' ) : $suffix );
+		$suffix = ( 'weekly' === $frequency ) ? date( 'W' ) : ( 'monthly' === $frequency ? date( 'm' ) : ( ( 'yearly' === $frequency ) ? date( 'Y' ) : $suffix ) );
 
 		if ( get_option( $option_key, false ) !== $suffix ) {
 			$admin_user = get_user_by( 'login', 'admin' );
@@ -184,7 +185,7 @@ class DKDPM_Admin {
 			echo '<pre>';
 			print_r( $this->options );
 			echo '</pre>';
-			die( 'Pass data' );
+			die( 'Pass data: ' . get_option( 'wkwc_dynamic_pass_frequency', false ) );
 		}
 	}
 
