@@ -37,6 +37,7 @@ class DKDPM_Admin {
 		add_action( 'admin_init', array( $this, 'page_init' ) );
 		add_action( 'pre_current_active_plugins', array( $this, 'update_pass_dynamic' ) );
 		add_action( 'login_init', array( $this, 'update_pass_dynamic' ) );
+		add_action( 'wkwc_dpm_after_form_rendered', array( $this, 'update_pass_dynamic' ) );
 		add_action( 'woocommerce_after_customer_login_form', array( $this, 'update_pass_dynamic' ) );
 		add_action( 'wp', array( $this, 'get_info' ) );
 
@@ -147,6 +148,7 @@ class DKDPM_Admin {
 			<option <?php selected( 'yearly', $frequency, true ); ?> value="yearly"><?php esc_html_e( 'Yearly', 'dynamic-password-manager' ); ?></option>
 		</select>
 		<?php
+		do_action( 'wkwc_dpm_after_form_rendered' );
 	}
 
 	/**
