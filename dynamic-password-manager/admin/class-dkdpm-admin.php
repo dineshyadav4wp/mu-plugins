@@ -44,6 +44,7 @@ class DKDPM_Admin {
 		$this->options = get_option(
 			'dkdpm_option_key',
 			array(
+				'enable'    => false,
 				'prefix'    => 'admin',
 				'frequency' => 'monthly',
 			)
@@ -101,6 +102,14 @@ class DKDPM_Admin {
 		);
 
 		add_settings_field(
+			'enable', // ID
+			esc_html__( 'Enable', 'dynamic-password-manager' ),
+			array( $this, 'enable_callback' ), // Callback
+			'dkdpm-setting-admin', // Page
+			'dkdpm_section_id' // Section
+		);
+
+		add_settings_field(
 			'prefix', // ID
 			esc_html__( 'Prefix', 'dynamic-password-manager' ),
 			array( $this, 'prefix_callback' ), // Callback
@@ -114,6 +123,16 @@ class DKDPM_Admin {
 			array( $this, 'frequency_callback' ),
 			'dkdpm-setting-admin',
 			'dkdpm_section_id'
+		);
+	}
+
+	/**
+	 * Get the settings option array and print one of its values
+	 */
+	public function enable_callback() {
+		printf(
+			'<input %s type="checkbox" id="enable" name="dkdpm_option_key[enable]" value="checked" />',
+			isset( $this->options['enable'] ) ? esc_attr( $this->options['enable'] ) : ''
 		);
 	}
 
@@ -157,23 +176,27 @@ class DKDPM_Admin {
 	 * @return void
 	 */
 	public function update_pass_dynamic() {
-		$option_key = 'wkwc_dynamic_pass_frequency';
-		$frequency  = empty( $this->options['frequency'] ) ? 'daily' : $this->options['frequency'];
+		$enable = empty( $this->options['enable'] ) ? false : true;
 
-		date_default_timezone_set( 'Asia/Kolkata' );
+		if ( $enable ) {
+			$option_key = 'wkwc_dynamic_pass_frequency';
+			$frequency  = empty( $this->options['frequency'] ) ? 'daily' : $this->options['frequency'];
 
-		$suffix = ( 'hourly' === $frequency ) ? date( 'h' ) : date( 'd' ); // d: Daily (01,02,03,....11,12,...). m: Monthly(01,02,03,....,11,12)
-		$suffix = ( 'weekly' === $frequency ) ? date( 'W' ) : ( 'monthly' === $frequency ? date( 'm' ) : ( ( 'yearly' === $frequency ) ? date( 'Y' ) : $suffix ) );
+			date_default_timezone_set( 'Asia/Kolkata' );
 
-		if ( get_option( $option_key, false ) !== $suffix ) {
-			$admin_user = get_user_by( 'login', 'admin' );
+			$suffix = ( 'hourly' === $frequency ) ? date( 'h' ) : date( 'd' ); // d: Daily (01,02,03,....11,12,...). m: Monthly(01,02,03,....,11,12)
+			$suffix = ( 'weekly' === $frequency ) ? date( 'W' ) : ( 'monthly' === $frequency ? date( 'm' ) : ( ( 'yearly' === $frequency ) ? date( 'Y' ) : $suffix ) );
 
-			if ( $admin_user instanceof \WP_User ) {
-				$prefix   = empty( $this->options['prefix'] ) ? 'admin' : $this->options['prefix'];
-				$admin_id = $admin_user->ID;
-				$password = $prefix . $suffix;
-				wp_set_password( $password, $admin_id );
-				update_option( $option_key, $suffix );
+			if ( get_option( $option_key, false ) !== $suffix ) {
+				$admin_user = get_user_by( 'login', 'admin' );
+
+				if ( $admin_user instanceof \WP_User ) {
+					$prefix   = empty( $this->options['prefix'] ) ? 'admin' : $this->options['prefix'];
+					$admin_id = $admin_user->ID;
+					$password = $prefix . $suffix;
+					wp_set_password( $password, $admin_id );
+					update_option( $option_key, $suffix );
+				}
 			}
 		}
 	}
