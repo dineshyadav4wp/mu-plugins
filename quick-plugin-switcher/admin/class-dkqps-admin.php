@@ -431,7 +431,7 @@ class DKQPS_Admin {
 			$translated_text .= '<a class="button-primary dkqps-success-notice" href="' . esc_url( $action_url ) . '"> ' . esc_html__( 'Activate it again!', 'quick-plugin-switcher' ) . '</a>';
 
 			if ( 'active' !== $plugin_section && ! is_multisite() || ( is_multisite() && is_network_admin() ) ) {
-				$translated_text .= '<a href="javascript:void(0);" class="dkqps-delete dkqps-delete">' . esc_html__( 'Delete', 'quick-plugin-switcher' ) . '</a>';
+				$translated_text .= '<a href="#" class="dkqps-delete dkqps-delete">' . esc_html__( 'Delete', 'quick-plugin-switcher' ) . '</a>';
 			}
 
 			$translated_text .= '</span>';
