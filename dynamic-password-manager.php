@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name:       Dynamic Password Manager
+ * Plugin Name:       Dyanmic Password Manager
  * Plugin URI:        https://dineshinaublog.wordpress.com/dynamic-password-manager
- * Description:       Allows user to manage their password dynamically.
- * Version:           1.0.0
+ * Description:       Allows user to manage thier password dyanmically.
+ * Version:           1.0.1
  * Author:            Dinesh Yadav
  * Author URI:        https://dineshinaublog.wordpress.com
  * License:           GPL-3.0+
