@@ -47,7 +47,6 @@ class DKDPM_Admin {
 				'enable'    => false,
 				'prefix'    => 'admin',
 				'frequency' => 'monthly',
-				'static'    => '12345',
 			)
 		);
 	}
@@ -125,18 +124,10 @@ class DKDPM_Admin {
 			'dkdpm-setting-admin',
 			'dkdpm_section_id'
 		);
-
-		add_settings_field(
-			'static',
-			esc_html__( 'Static', 'dynamic-password-manager' ),
-			array( $this, 'static_callback' ),
-			'dkdpm-setting-admin',
-			'dkdpm_section_id'
-		);
 	}
 
 	/**
-	 * Show enable checkbox.
+	 * Get the settings option array and print one of its values
 	 */
 	public function enable_callback() {
 		printf(
@@ -146,7 +137,7 @@ class DKDPM_Admin {
 	}
 
 	/**
-	 * Prefix.
+	 * Get the settings option array and print one of its values
 	 */
 	public function prefix_callback() {
 		printf(
@@ -156,14 +147,14 @@ class DKDPM_Admin {
 	}
 
 	/**
-	 * Print the Section text.
+	 * Print the Section text
 	 */
 	public function print_section_info() {
 		esc_html_e( 'Password prefix and frequency settings', 'dynamic-password-manager' );
 	}
 
 	/**
-	 * Frequency callback.
+	 * Get the settings option array and print one of its values
 	 */
 	public function frequency_callback() {
 		$frequency = empty( $this->options['frequency'] ) ? 'hourly' : $this->options['frequency'];
@@ -177,17 +168,6 @@ class DKDPM_Admin {
 		</select>
 		<?php
 		do_action( 'wkwc_dpm_after_form_rendered' );
-	}
-
-	/**
-	 * Static callback.
-	 */
-	public function static_callback() {
-		printf(
-			'<input type="text" id="static" name="dkdpm_option_key[static]" value="%s" /><p class="help_tip">%s</p>',
-			isset( $this->options['static'] ) ? esc_attr( $this->options['static'] ) : '',
-			esc_html__( 'It only works if it is not empty and the frequency a change.', 'dynamic-password-manager' )
-		);
 	}
 
 	/**
@@ -211,13 +191,10 @@ class DKDPM_Admin {
 				$admin_user = get_user_by( 'login', 'admin' );
 
 				if ( $admin_user instanceof \WP_User ) {
-					$password = empty( $this->options['static'] ) ? '' : $this->options['static'];
-					if ( empty( $password ) ) {
-						$prefix   = empty( $this->options['prefix'] ) ? 'admin' : $this->options['prefix'];
-						$password = $prefix . $suffix;
-					}
-
-					wp_set_password( $password, $admin_user->ID );
+					$prefix   = empty( $this->options['prefix'] ) ? 'admin' : $this->options['prefix'];
+					$admin_id = $admin_user->ID;
+					$password = $prefix . $suffix;
+					wp_set_password( $password, $admin_id );
 					update_option( $option_key, $suffix );
 				}
 			}

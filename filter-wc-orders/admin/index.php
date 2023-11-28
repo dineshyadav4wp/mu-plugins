@@ -2,5 +2,5 @@
 /**
  * Silence is golden.
  *
- * @package dynamic-password-manager
+ * @package filter-wc-orders
  */

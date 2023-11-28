@@ -98,7 +98,7 @@ class DKQPS_Admin {
 		 * @since 1.0
 		 */
 		if ( is_admin() ) {
-			$dk_act = filter_input( INPUT_GET, 'dk_act', FILTER_SANITIZE_STRING );
+			$dk_act = filter_input( INPUT_GET, 'dk_act', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			if ( ! is_null( $dk_act ) ) {
 				if ( is_network_admin() ) {
 					add_action( 'network_admin_notices', array( $this, 'switch_success_admin_notice' ), 10 );
@@ -122,7 +122,7 @@ class DKQPS_Admin {
 		 * @since 1.3
 		 */
 		if ( is_admin() ) {
-			$plugin_status = filter_input( INPUT_GET, 'plugin_status', FILTER_SANITIZE_STRING );
+			$plugin_status = filter_input( INPUT_GET, 'plugin_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			if ( ! empty( $plugin_status ) ) {
 				add_filter( 'gettext', array( $this, 'dkqps_add_switching_link' ), 99, 3 );
 			}
@@ -320,7 +320,7 @@ class DKQPS_Admin {
 			$plugin_version = $switched_plugin['version'];
 			$plugin         = $switched_plugin['plugin'];
 
-			$plugin_section = filter_input( INPUT_GET, 'plugin_status', FILTER_SANITIZE_STRING );
+			$plugin_section = filter_input( INPUT_GET, 'plugin_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 			$activated  = ( 1 === $dk_act ) ? true : false;
 			$action_url = $this->dkqps_get_action_url( $plugin, $activated );
@@ -412,7 +412,7 @@ class DKQPS_Admin {
 		$plugin         = $switched_plugin['plugin'];
 		$plugin_version = $switched_plugin['version'];
 
-		$plugin_section = filter_input( INPUT_GET, 'plugin_status', FILTER_SANITIZE_STRING );
+		$plugin_section = filter_input( INPUT_GET, 'plugin_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		if ( $activated_notice === $untranslated_text ) {
 			$action_url = $this->dkqps_get_action_url( $plugin, true );
@@ -431,7 +431,7 @@ class DKQPS_Admin {
 			$translated_text .= '<a class="button-primary dkqps-success-notice" href="' . esc_url( $action_url ) . '"> ' . esc_html__( 'Activate it again!', 'quick-plugin-switcher' ) . '</a>';
 
 			if ( 'active' !== $plugin_section && ! is_multisite() || ( is_multisite() && is_network_admin() ) ) {
-				$translated_text .= '<a href="#" class="dkqps-delete dkqps-delete">' . esc_html__( 'Delete', 'quick-plugin-switcher' ) . '</a>';
+				$translated_text .= '<a href="javascript:void(0);" class="dkqps-delete dkqps-delete">' . esc_html__( 'Delete', 'quick-plugin-switcher' ) . '</a>';
 			}
 
 			$translated_text .= '</span>';
