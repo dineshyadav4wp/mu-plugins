@@ -343,7 +343,7 @@ class DKQPS_Admin {
 						<?php
 						if ( ( 'active' !== $plugin_section ) && ! $activated && ( ! is_multisite() || ( is_multisite() && is_network_admin() ) ) ) {
 							?>
-							<a href="javascript:void(0);"
+							<a href="#"
 							   class="dkqps-delete"><?php esc_html_e( 'Delete', 'quick-plugin-switcher' ); ?></a>
 							<?php
 						}
