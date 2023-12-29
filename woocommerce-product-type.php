@@ -26,9 +26,8 @@ defined( 'WKPTO_PLUGIN_FILE' ) || define( 'WKPTO_PLUGIN_FILE', plugin_dir_path( 
 defined( 'WKPTO_PLUGIN_URL' ) || define( 'WKPTO_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 defined( 'WKPTO_SCRIPT_VERSION' ) || define( 'WKPTO_SCRIPT_VERSION', '1.0.0' );
 
-require_once WKPTO_PLUGIN_FILE . 'inc/class-wkpto-autoload.php';
+require_once __DIR__ . '/woocommerce-product-type/inc/class-wkpto-autoload.php';
 if ( ! class_exists( 'WKPTO', false ) ) {
-	include_once WKPTO_PLUGIN_FILE . '/includes/class-wkpto.php';
+	include_once __DIR__ . '/woocommerce-product-type/includes/class-wkpto.php';
 	WKPTO::get_instance();
 }
-
