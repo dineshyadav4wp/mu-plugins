@@ -3,17 +3,15 @@
  * Plugin Name:       Dyanmic Password Manager
  * Plugin URI:        https://dineshinaublog.wordpress.com/dynamic-password-manager
  * Description:       Allows user to manage thier password dyanmically.
- * Version:           1.0.1
+ * Version:           1.0.3
  * Author:            Dinesh Yadav
  * Author URI:        https://dineshinaublog.wordpress.com
- * License:           GPL-3.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       dynamic-password-manager
  * Domain Path:       /languages
  *
  * Requires at least: 5.0
  * Tested up to: 6.3
- * Requires PHP: 7.3
+ * Requires PHP: 7.4
  *
  * @package dynamic-password-manager
  */
@@ -93,18 +91,5 @@ if ( ! class_exists( 'DKDPM_Core' ) ) {
 			return self::$instance;
 		}
 	}
+	DKDPM_Core::get_instance();
 }
-/**
- * Initiating the class object.
- */
-if ( ! function_exists( 'dkdpm_core' ) ) {
-	/**
-	 * Creating a new instance.
-	 *
-	 * @return DKDPM_Core|null
-	 */
-	function dkdpm_core() {
-		return DKDPM_Core::get_instance();
-	}
-}
-dkdpm_core();
