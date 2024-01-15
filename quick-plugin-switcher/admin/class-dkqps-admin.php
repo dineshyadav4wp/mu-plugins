@@ -17,7 +17,6 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  * @subpackage quick-plugin-switcher/admin
  */
 class DKQPS_Admin {
-
 	/**
 	 * Instance variable.
 	 *
@@ -190,10 +189,10 @@ class DKQPS_Admin {
 		foreach ( ( is_array( $post_ids ) || is_object( $post_ids ) ) ? $post_ids : array() as $post_id ) {
 			if ( is_array( $active_plugins ) && in_array( $post_id, $active_plugins, true ) ) {
 				unset( $active_plugins[ array_search( $post_id, $active_plugins, true ) ] );
-				$de_act ++;
+				++$de_act;
 			} else {
 				array_push( $active_plugins, $post_id );
-				$act ++;
+				++$act;
 			}
 		}
 
@@ -238,10 +237,10 @@ class DKQPS_Admin {
 		foreach ( ( is_array( $post_ids ) || is_object( $post_ids ) ) ? $post_ids : array() as $post_id ) {
 			if ( is_array( $active_plugins ) && count( $active_plugins ) && array_key_exists( $post_id, $active_plugins ) ) {
 				unset( $active_plugins[ $post_id ] );
-				$de_act ++;
+				++$de_act;
 			} else {
 				$active_plugins[ $post_id ] = time();
-				$act ++;
+				++$act;
 			}
 		}
 
@@ -328,7 +327,7 @@ class DKQPS_Admin {
 			<div class="notice notice-success is-dismissible">
 				<p class="dkqps-notice">
 					<span data-dkqps-blog_id="<?php echo esc_attr( get_current_blog_id() ); ?>"
-						  data-plugin="<?php echo esc_attr( $plugin ); ?>">
+							data-plugin="<?php echo esc_attr( $plugin ); ?>">
 						<?php
 						$switch_btn_text = esc_html__( 'Deactivate it again!', 'quick-plugin-switcher' );
 						if ( $activated ) {
@@ -339,12 +338,12 @@ class DKQPS_Admin {
 						}
 						?>
 						<a class="dkqps-success-notice button-primary"
-						   href="<?php echo esc_url( $action_url ); ?>"><?php echo esc_html( $switch_btn_text ); ?></a>
+							href="<?php echo esc_url( $action_url ); ?>"><?php echo esc_html( $switch_btn_text ); ?></a>
 						<?php
 						if ( ( 'active' !== $plugin_section ) && ! $activated && ( ! is_multisite() || ( is_multisite() && is_network_admin() ) ) ) {
 							?>
 							<a href="#"
-							   class="dkqps-delete"><?php esc_html_e( 'Delete', 'quick-plugin-switcher' ); ?></a>
+								class="dkqps-delete"><?php esc_html_e( 'Delete', 'quick-plugin-switcher' ); ?></a>
 							<?php
 						}
 						?>
@@ -457,9 +456,9 @@ class DKQPS_Admin {
 			return $action_url;
 		}
 		if ( $activated ) {
-			$action_url = wp_nonce_url( 'plugins.php?action=deactivate&amp;plugin=' . urlencode( $plugin ) . '&amp;plugin_status=' . $context . '&amp;paged=' . $page . '&amp;s=' . $s, 'deactivate-plugin_' . $plugin ); //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.urlencode_urlencode
+			$action_url = wp_nonce_url( 'plugins.php?action=deactivate&amp;plugin=' . rawurlencode( $plugin ) . '&amp;plugin_status=' . $context . '&amp;paged=' . $page . '&amp;s=' . $s, 'deactivate-plugin_' . $plugin );
 		} else {
-			$action_url = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . urlencode( $plugin ) . '&amp;plugin_status=' . $context . '&amp;paged=' . $page . '&amp;s=' . $s, 'activate-plugin_' . $plugin ); //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.urlencode_urlencode
+			$action_url = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . rawurlencode( $plugin ) . '&amp;plugin_status=' . $context . '&amp;paged=' . $page . '&amp;s=' . $s, 'activate-plugin_' . $plugin );
 		}
 
 		return $action_url;
